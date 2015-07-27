@@ -61,7 +61,7 @@
      :response (<! (http/get hacker-news-source
                              {:with-credentials? false}))}))
 
-(defn handle-event!
+(defn handle-event
   [app event]
   (case (:type event)
     :load-request (update-in app [:events] conj (fetch-hackernews-data))
@@ -95,5 +95,5 @@
         (if (nil? event)
           (swap! app-state update :events disj channel)
           (do
-            (swap! app-state handle-event! event)))
+            (swap! app-state handle-event event)))
         (recur)))))
